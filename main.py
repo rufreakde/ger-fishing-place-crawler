@@ -75,7 +75,7 @@ def main():
                             "gewaesserinfos": gewaesserinfos,
                             "url": url}
 
-    with open('gewaesser.json', 'w') as fp:
+    with open('anglermap-de-gewaesserportal.json', 'w') as fp:
         json.dump(inhalt, fp)
     driver.close()
 
