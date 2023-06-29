@@ -17,7 +17,18 @@ def find_table(x):
 
 def main():
     baseurl = "https://www.anglermap.de/gewaesserportal/liste-stillwasser.php"
-    driver = webdriver.Firefox()
+    try:
+        print("Try using Firefox")
+        driver = webdriver.Firefox()
+        time.sleep(2)
+    except:
+        print("Fallback to Chrome")
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(
+            options=options,
+        )
+        time.sleep(2)
     driver.get(baseurl)
     python_button = driver.find_element(By.ID, "ez-accept-all")
     python_button.click()
@@ -37,12 +48,8 @@ def main():
             pass
 
         print("waiting...", end='')
-        # time.sleep(2)
-        # element = WebDriverWait(driver, 10).until(
-        #     lambda x: find_table(x))
         wait = WebDriverWait(driver, 2)
         element = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "liste_well_anz")))
-        # time.sleep(1)
         print("finished")
         soup = BeautifulSoup(driver.page_source)
 
